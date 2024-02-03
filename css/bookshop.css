@@ -1,0 +1,10 @@
+.book-list {
+    display: flex;
+    flex-direction: column;
+    border-collapse: collapse;
+    margin: 10px 0px;
+}
+
+th {
+    border: 1px solid black;
+}

@@ -1,52 +1,61 @@
 <!DOCTYPE html>
 <html lang="en">
-    <head>
-        <meta charset="UTF-8">
-        <meta http-equiv="X-UA-Compatible" content="IE=edge">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <link rel="stylesheet" href="css/bookshop.css">
-        <title>BookShop Exercise</title>
-    </head>
-    <body onload="onInit()">
-        <h1>My Tiny Book-Shop</h1>
 
-        <section class="filter">
-            <span>Filter by:</span>
-            <select onchange="onSetFilterBy(this)">
-                <option value="">All</option>
-                <option value="Done">Done</option>
-                <option value="Active">Active</option>
-            </select>
-        </section>
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="css/bookshop.css">
+    <title>BookShop Exercise</title>
+</head>
 
-        <form onsubmit="onAddBook(event)" class="new-book">
-            <input type="text" placeholder="Add a book and author divided by a comma">
-            <button>Add</button>
+<body onload="onInit()">
+    <h1>My Tiny Book-Shop</h1>
+
+    <section class="filter">
+        <span>Filter by:</span>
+        <select onchange="onSetFilterBy(this)">
+            <option value="">All</option>
+            <option value="Done">Available</option>
+            <option value="Active">Unavailable</option>
+        </select>
+    </section>
+
+    <form onsubmit="onAddBook(event)" class="new-book">
+        <input type="text" placeholder="Add a book and author divided by a comma">
+        <button>Add</button>
+    </form>
+
+    <table class="book-list">
+        <tr>
+            <th>Title</th>
+            <th>Author</th>
+            <th>Price</th>
+            <th>Actions</th>
+        </tr>
+    </table>
+
+    <dialog class="book-details">
+        <form method="dialog">
+            <h2>Book: <span></span></h2>
+            <pre></pre>
+            <button>x</button>
         </form>
+    </dialog>
 
-        <ul class="book-list"></ul>
+    <footer>
+        <span>Total:</span>
+        <span class="total-books"></span>
+        <span>Available:</span>
+        <span class="available-books"></span>
+        <span>Unavailable:</span>
+        <span class="unavailable-books"></span>
+    </footer>
 
-        <dialog class="book-details">
-            <form method="dialog">
-                <h2>Book: <span></span></h2>
-                <pre></pre>
-                <button>x</button>
-            </form>
-        </dialog>
+    <script src="js/services/util.service.js"></script>
+    <script src="js/services/storage.service.js"></script>
+    <script src="js/services/bookshop.service.js"></script>
+    <script src="js/bookshop.controller.js"></script>
+</body>
 
-        <footer>
-            <span>Total:</span>
-            <span class="total-books"></span>
-            <span>Available:</span>
-            <span class="available-books"></span>
-            <span>Unavailable:</span>
-            <span class="unavailable-books"></span>
-        </footer>
-
-        <!-- <script src="js/services/util.service.js"></script>
-        <script src="js/services/storage.service.js"></script>
-        <script src="js/services/bookshop.service.js"></script>
-        <script src="js/bookshop.controller.js"></script> -->
-        <script src="main.js"></script>
-    </body>
 </html>
