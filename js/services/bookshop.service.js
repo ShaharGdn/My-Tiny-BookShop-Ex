@@ -37,3 +37,8 @@ function toggleBook(bookId) {
 
     return book
 }
+
+function updateBook(bookId, newPrice) {
+    const idx = gBooks.findIndex(book => book.id === bookId)
+    gBooks[idx].price = newPrice
+}

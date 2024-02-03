@@ -1,6 +1,7 @@
 'use strict'
 
 function onInit() {
+    getBooks()
     renderBooks()
 }
 
@@ -13,7 +14,7 @@ function renderBooks() {
         <td>${book.name}</td>
         <td>${book.author}</td>
         <td>${book.price}</td>
-        <td><button class="read">Read</button><button class="update">Update</button><button class="delete" onclick="onRemoveBook(event,'${book.id}')">Delete</button></td>
+        <td><button class="read">Read</button><button class="update" onclick="onUpdateBook('${book.id}')">Update</button><button class="delete" onclick="onRemoveBook(event,'${book.id}')">Delete</button></td>
         </tr>`)
 
     elBooksList.innerHTML = titles + strHtmls.join('')
@@ -41,5 +42,12 @@ function onRemoveBook(ev, bookId) {
 
 function onToggleBook(bookId) {
     toggleBook(bookId)
+    renderBooks()
+}
+
+function onUpdateBook(bookId) {
+    const newPrice = prompt('Please enter a new price: ')
+
+    updateBook(bookId, newPrice)
     renderBooks()
 }
