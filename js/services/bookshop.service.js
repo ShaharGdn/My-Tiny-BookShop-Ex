@@ -1,21 +1,26 @@
 'use strict'
 
-var gBooks = [
-    { name: 'Black Fog', author: 'Jane Air', id: makeId(), isAvailable: true },
-    { name: 'Ginger', author: 'Shlomo', id: makeId(), isAvailable: true },
-    { name: 'Matski', author: 'Ingi', id: makeId(), isAvailable: true },
-]
+var gBooks
+
+function getBooks() {
+    return gBooks = [
+        { name: 'Black Fog', author: 'Jane Air', price: '100', id: makeId(), isAvailable: true },
+        { name: 'Ginger', author: 'Shlomo', price: '120', id: makeId(), isAvailable: true },
+        { name: 'Matski', author: 'Ingi', price: '80', id: makeId(), isAvailable: true },
+    ]
+}
 
 function addBook(elInput) {
     var bookStr = elInput.value
-    var bookNameAuthor = bookStr.split(',')
-    var bookName = bookNameAuthor[0]
-    var author = bookNameAuthor[1]
+    var bookNameAuthorPrice = bookStr.split(',')
+    var bookName = bookNameAuthorPrice[0]
+    var author = bookNameAuthorPrice[1]
+    var price = bookNameAuthorPrice[2]
 
-    const book = { name: bookName, author: author, id: makeId(), isAvailable: true }
+    const book = { name: bookName, author: author, price: price, id: makeId(), isAvailable: true }
 
     gBooks.unshift(book)
-    // renderBooks()
+    renderBooks()
     console.log('gBooks:', gBooks)
 }
 

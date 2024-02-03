@@ -1,3 +1,11 @@
+body {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    background-color: #faf6f694;
+    font-family: Assistant;
+}
 .book-list {
     display: flex;
     flex-direction: column;
@@ -5,6 +13,40 @@
     margin: 10px 0px;
 }
 
-th {
+tr:nth-child(odd) {
+    background-color: #b9b9b952;
+}
+
+th, td {
     border: 1px solid black;
+    padding: 10px;
+}
+
+footer {
+    position: fixed;
+    bottom: 0px;
+}
+
+button {
+    margin: 3px;
+    padding: 10px;
+    border: none;
+    border-radius: 20%;
+}
+
+button:hover {
+    cursor: pointer;
+    color: white;
+}
+
+.read {
+    background-color: #66af7ba9;
+}
+
+.update {
+    background-color: #667eafa9;
+}
+
+.delete {
+    background-color: #af6666cf;
 }
