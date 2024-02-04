@@ -4,9 +4,9 @@ var gBooks
 
 function getBooks() {
     return gBooks = [
-        { name: 'Black Fog', author: 'Jane Air', price: '100', id: makeId(), isAvailable: true },
-        { name: 'Ginger', author: 'Shlomo', price: '120', id: makeId(), isAvailable: true },
-        { name: 'Matski', author: 'Ingi', price: '80', id: makeId(), isAvailable: true },
+        { name: 'Black Fog', author: 'Jane Air', price: '100', id: makeId(), isAvailable: true ,imgURL: `<img src="https://edit.org/images/cat/book-covers-big-2019101610.jpg">`},
+        { name: 'Ginger', author: 'Shlomo', price: '120', id: makeId(), isAvailable: true ,imgURL: `<img src="https://content.wepik.com/statics/90897927/preview-page0.jpg">`},
+        { name: 'Matski', author: 'Ingi', price: '80', id: makeId(), isAvailable: true ,imgURL: `<img src="https://d1csarkz8obe9u.cloudfront.net/posterpreviews/art-book-cover-design-template-34323b0f0734dccded21e0e3bebf004c_screen.jpg?ts=1637015198">`},
     ]
 }
 
@@ -41,4 +41,10 @@ function toggleBook(bookId) {
 function updateBook(bookId, newPrice) {
     const idx = gBooks.findIndex(book => book.id === bookId)
     gBooks[idx].price = newPrice
+}
+
+function readBook(BookId) {
+	// Read
+	const book = gBooks.find(book => book.id === BookId)
+	return book
 }

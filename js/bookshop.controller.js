@@ -14,7 +14,7 @@ function renderBooks() {
         <td>${book.name}</td>
         <td>${book.author}</td>
         <td>${book.price}</td>
-        <td><button class="read">Read</button><button class="update" onclick="onUpdateBook('${book.id}')">Update</button><button class="delete" onclick="onRemoveBook(event,'${book.id}')">Delete</button></td>
+        <td><button class="read" onclick="onReadBook('${book.id}')">Read</button><button class="update" onclick="onUpdateBook('${book.id}')">Update</button><button class="delete" onclick="onRemoveBook(event,'${book.id}')">Delete</button></td>
         </tr>`)
 
     elBooksList.innerHTML = titles + strHtmls.join('')
@@ -50,4 +50,20 @@ function onUpdateBook(bookId) {
 
     updateBook(bookId, newPrice)
     renderBooks()
+}
+
+function onReadBook(BookId) {
+    const elModal = document.querySelector('.book-details')
+    const elTitle = elModal.querySelector('h2 span')
+    const elAuthor = elModal.querySelector('h3 span')
+    const elPre = elModal.querySelector('pre')
+
+    const book = readBook(BookId)
+    // const todoStr = JSON.stringify(book, null, 4)
+    
+    elTitle.innerText = book.name
+    elAuthor.innerText = book.author
+    elPre.innerHTML = book.imgURL
+
+    elModal.showModal()
 }
