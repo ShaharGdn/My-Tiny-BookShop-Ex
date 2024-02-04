@@ -13,12 +13,17 @@ function getBooks() {
 function addBook(elInput) {
     var bookStr = elInput.value
     var bookNameAuthorPrice = bookStr.split(',')
-    var bookName = bookNameAuthorPrice[0]
+    var name = bookNameAuthorPrice[0]
     var author = bookNameAuthorPrice[1]
     var price = bookNameAuthorPrice[2]
 
-    const book = { name: bookName, author: author, price: price, id: makeId(), isAvailable: true }
+    const book = { name, author, price, id: makeId(), isAvailable: true ,imgURL: `<img src="https://st4.depositphotos.com/14953852/24787/v/450/depositphotos_247872612-stock-illustration-no-image-available-icon-vector.jpg">`}
 
+    if (bookNameAuthorPrice.length < 3) {
+        alert('Error, Please check your input')
+        return
+    }
+    
     gBooks.unshift(book)
     renderBooks()
     console.log('gBooks:', gBooks)
@@ -48,3 +53,4 @@ function readBook(BookId) {
 	const book = gBooks.find(book => book.id === BookId)
 	return book
 }
+
