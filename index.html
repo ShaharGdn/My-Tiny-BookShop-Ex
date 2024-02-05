@@ -12,22 +12,19 @@
 <body onload="onInit()">
     <h1>My Tiny Book-Shop</h1>
 
-    <section class="filter">
-        <span>Filter by:</span>
-        <select onchange="onSetFilterBy(this)">
-            <option value="">All</option>
-            <option value="Done">Available</option>
-            <option value="Active">Unavailable</option>
-        </select>
-    </section>
+    <form class="search-bar">
+        <span>Search Title:</span>
+        <input type="text" placeholder="Enter a title name here..." oninput="lookupTitle(event)">
+        <button>🔍</button><button>clear</button>
+    </form>
 
+    <table class="book-list">
+    </table>
+    
     <form onsubmit="onAddBook(event)" class="new-book">
         <input type="text" placeholder="Add a book, author & price divided by a comma">
         <button>Add</button>
     </form>
-    
-    <table class="book-list">
-    </table>
 
     <dialog class="book-details">
         <form method="dialog">
@@ -37,7 +34,7 @@
             <button>x</button>
         </form>
     </dialog>
-
+    
     <footer>
         <span>Expensive:</span>
         <span class="expensive-books"></span>

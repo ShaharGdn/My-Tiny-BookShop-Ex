@@ -71,3 +71,8 @@ pre img {
 table { 
     table-layout:fixed; width:450px;
 }
+
+.new-book {
+    display: flex;
+    flex-direction: column;
+}
