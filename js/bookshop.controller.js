@@ -7,6 +7,7 @@ function onInit() {
 
     getBooks()
     renderBooks()
+    updateStats()
 }
 
 
@@ -27,6 +28,8 @@ function renderBooks() {
         </tr>`)
 
     elBooksList.innerHTML = titles + strHtmls.join('')
+
+    updateStats()
 }
 
 //event handler for when a book is added by user
@@ -109,25 +112,24 @@ function onClearSearch(ev, elValue) {
     searchInput.value = ''
 }
 
+//switch case for different msg types
 function showMsg(type) {
     const elMsg = document.querySelector("p")
+    elMsg.classList = ''
 
     switch (type) {
         case 'add':
             elMsg.innerText = "Book Added Successfully"
-            elMsg.classList = ''
             elMsg.classList.add('green-msg')
 
             break;
         case 'remove':
             elMsg.innerText = "Book Removed Successfully"
-            elMsg.classList = ''
             elMsg.classList.add('red-msg')
 
             break;
         case 'update':
             elMsg.innerText = "Book Updated Successfully"
-            elMsg.classList = ''
             elMsg.classList.add('green-msg')
 
             break;
@@ -136,4 +138,15 @@ function showMsg(type) {
         elMsg.innerText = ''
         elMsg.classList = ''
     }, 2000)
+}
+
+function updateStats() {
+    const stats = getStats()
+    const elExp = document.querySelector(".expensive-books")
+    const elCheap = document.querySelector(".cheap-books")
+    const elAvg = document.querySelector(".avg-books")
+
+    elExp.innerText = stats.expensive
+    elCheap.innerText = stats.cheap
+    elAvg.innerText = stats.average
 }

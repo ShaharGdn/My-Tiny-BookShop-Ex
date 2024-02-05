@@ -4,6 +4,7 @@
 
 var gBooks
 _createBooks()
+getStats()
 
 //returns the filtered books from a search or original gBooks.
 
@@ -105,4 +106,19 @@ function _createBook(name, author, price, imgURL) {
 //save books to local DB
 function _saveBooks() {
     saveToStorage('booksDB', gBooks)
+}
+
+function getStats() {
+    var stats = gBooks.reduce((acc, book) => {
+        if (book.price > 200) {
+            acc.expensive++;
+        } else if (book.price <= 200 && book.price > 80) {
+            acc.average++;
+        } else if (book.price <= 80) {
+            acc.cheap++;
+        }
+        return acc;
+    }, { expensive: 0, average: 0, cheap: 0 });
+
+    return stats
 }
