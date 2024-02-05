@@ -4,10 +4,9 @@
 
 var gBooks
 _createBooks()
-getStats()
+
 
 //returns the filtered books from a search or original gBooks.
-
 function getBooks(value) {
     if (!value) return gBooks;
 
@@ -22,7 +21,6 @@ function getBooks(value) {
 }
 
 // adds a book to the model 
-
 function addBook(elInput) {
     var bookStr = elInput.value
     var bookNameAuthorPrice = bookStr.split(',')
@@ -64,7 +62,6 @@ function readBook(BookId) {
     return book
 }
 
-
 // Private functions
 
 //make books
@@ -102,12 +99,12 @@ function _createBook(name, author, price, imgURL) {
     }
 }
 
-
 //save books to local DB
 function _saveBooks() {
     saveToStorage('booksDB', gBooks)
 }
 
+//get stats of existing books
 function getStats() {
     var stats = gBooks.reduce((acc, book) => {
         if (book.price > 200) {

@@ -55,7 +55,7 @@ button:hover {
 }
 
 .add-btn {
-    background-color: #d0d0d0;
+    background-color: rgb(229, 215, 190);
 }
 
 form input {
@@ -72,6 +72,7 @@ pre img {
 table {
     table-layout: fixed;
     width: 450px;
+    text-align: center;
 }
 
 .new-book {
@@ -85,7 +86,7 @@ footer {
     gap: 20px;
 
     padding: 10px;
-    background-color: lightsteelblue;
+    background-color: rgb(233, 223, 206);
     width: 100%;
     margin-top: 50px;
     margin-bottom: 0px;
@@ -109,4 +110,11 @@ p {
 .red-msg {
     color: rgb(144, 10, 10);
     background-color: #bebebe8e;
+}
+
+h1 {
+    padding: 30px;
+    background-color: rgb(233, 223, 206);
+    width: 100%;
+    text-align: center;
 }

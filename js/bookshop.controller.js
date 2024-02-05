@@ -15,11 +15,17 @@ function renderBooks() {
     const elBooksList = document.querySelector('.book-list')
     //do we have a filter? if not return gBooks all
     const books = getBooks(gFilterBy)
-
-
-    //build the DOM structure of the list
+    
     const titles = `<tr><th>Title</th><th>Author</th>
         <th>Price</th><th>Actions</th></tr>`
+    
+    const emptyMsg = `<td colspan="4">No matching books were found...</td>`
+
+    if (books.length === 0) {
+        return elBooksList.innerHTML = titles + emptyMsg
+    }
+
+    //build the DOM structure of the list
     const strHtmls = books.map(book => `<tr>
         <td>${book.name}</td>
         <td>${book.author}</td>
@@ -134,6 +140,7 @@ function showMsg(type) {
 
             break;
     }
+
     setTimeout(() => {
         elMsg.innerText = ''
         elMsg.classList = ''
