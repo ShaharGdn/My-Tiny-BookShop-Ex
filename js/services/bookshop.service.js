@@ -29,7 +29,7 @@ function addBook(elInput) {
     var author = bookNameAuthorPrice[1]
     var price = bookNameAuthorPrice[2]
 
-    const book = _createBook(name, author, price, imgURL=`<img src="https://st4.depositphotos.com/14953852/24787/v/450/depositphotos_247872612-stock-illustration-no-image-available-icon-vector.jpg">`)
+    const book = _createBook(name, author, price, `<img src="https://st4.depositphotos.com/14953852/24787/v/450/depositphotos_247872612-stock-illustration-no-image-available-icon-vector.jpg">`)
     
     gBooks.unshift(book)
 

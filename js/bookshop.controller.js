@@ -34,7 +34,9 @@ function onAddBook(ev) {
     ev.preventDefault()
     const elInput = document.querySelector('.new-book input')
 
-    if (elInput.split(',').length < 3) {
+    const valueArr = elInput.value.split(',')
+
+    if (valueArr.length < 3) {
         alert('Error, Please check your input')
         return
     }
@@ -99,4 +101,8 @@ function onClearSearch(ev, elValue) {
     renderBooks()
 
     searchInput.value = ''
+}
+
+function showMsg(type) {
+
 }
