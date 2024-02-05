@@ -41,15 +41,19 @@ button:hover {
 }
 
 .read {
-    background-color: #66af7ba9;
+    background-color: #009f2da9;
 }
 
 .update {
-    background-color: #667eafa9;
+    background-color: #04369ba9;
 }
 
 .delete {
-    background-color: #af6666cf;
+    background-color: #a31515cf;
+}
+
+.add-btn {
+    background-color: #d0d0d0;
 }
 
 form input{
@@ -84,4 +88,14 @@ footer {
     margin-bottom: 0px;
     align-items: center;
     justify-content: center;
+}
+
+p {
+    position: fixed;
+    left: 10vh;
+    top: 2vh;
+    padding: 10px;
+    font-size: 1em;
+    border: 1px solid pink;
+    background-color: rgb(243, 238, 233);
 }
