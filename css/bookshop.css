@@ -6,6 +6,7 @@ body {
     background-color: #faf6f694;
     font-family: Assistant;
 }
+
 .book-list {
     display: flex;
     flex-direction: column;
@@ -17,7 +18,8 @@ tr:nth-child(odd) {
     background-color: #b9b9b952;
 }
 
-th, td {
+th,
+td {
     border: 1px solid black;
     padding: 10px;
     max-width: max-content;
@@ -41,22 +43,22 @@ button:hover {
 }
 
 .read {
-    background-color: #009f2da9;
+    background-color: #c9bf98;
 }
 
 .update {
-    background-color: #04369ba9;
+    background-color: #a17b47fd;
 }
 
 .delete {
-    background-color: #a31515cf;
+    background-color: #a23e3e;
 }
 
 .add-btn {
     background-color: #d0d0d0;
 }
 
-form input{
+form input {
     margin: 10px;
     width: 300px;
     height: 30px;
@@ -67,8 +69,9 @@ pre img {
     height: 200px;
 }
 
-table { 
-    table-layout:fixed; width:450px;
+table {
+    table-layout: fixed;
+    width: 450px;
 }
 
 .new-book {
@@ -96,6 +99,14 @@ p {
     top: 2vh;
     padding: 10px;
     font-size: 1em;
-    border: 1px solid pink;
-    background-color: rgb(243, 238, 233);
+}
+
+.green-msg {
+    color: green;
+    background-color: #bebebe;
+}
+
+.red-msg {
+    color: rgb(144, 10, 10);
+    background-color: #bebebe8e;
 }

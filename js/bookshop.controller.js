@@ -19,7 +19,7 @@ function renderBooks() {
     //build the DOM structure of the list
     const titles = `<tr><th>Title</th><th>Author</th>
         <th>Price</th><th>Actions</th></tr>`
-    const strHtmls = books.map(book => `<tr onclick="onToggleBook('${book.id}')">
+    const strHtmls = books.map(book => `<tr>
         <td>${book.name}</td>
         <td>${book.author}</td>
         <td>${book.price}</td>
@@ -45,6 +45,8 @@ function onAddBook(ev) {
     renderBooks()
 
     elInput.value = ''
+
+    showMsg('add')
 }
 
 //event handler for when a book is removed by user
@@ -53,6 +55,8 @@ function onRemoveBook(ev, bookId) {
 
     removeBook(bookId)
     renderBooks()
+
+    showMsg('remove')
 }
 
 //event handler for when a book price is updated by user
@@ -61,6 +65,8 @@ function onUpdateBook(bookId) {
 
     updateBook(bookId, newPrice)
     renderBooks()
+
+    showMsg('update')
 }
 
 //event handler for when the details button was clicked 
@@ -71,7 +77,7 @@ function onReadBook(BookId) {
     const elPre = elModal.querySelector('pre')
 
     const book = readBook(BookId)
-    
+
     elTitle.innerText = book.name
     elAuthor.innerText = book.author
     elPre.innerHTML = book.imgURL
@@ -104,5 +110,30 @@ function onClearSearch(ev, elValue) {
 }
 
 function showMsg(type) {
+    const elMsg = document.querySelector("p")
 
+    switch (type) {
+        case 'add':
+            elMsg.innerText = "Book Added Successfully"
+            elMsg.classList = ''
+            elMsg.classList.add('green-msg')
+
+            break;
+        case 'remove':
+            elMsg.innerText = "Book Removed Successfully"
+            elMsg.classList = ''
+            elMsg.classList.add('red-msg')
+
+            break;
+        case 'update':
+            elMsg.innerText = "Book Updated Successfully"
+            elMsg.classList = ''
+            elMsg.classList.add('green-msg')
+
+            break;
+    }
+    setTimeout(() => {
+        elMsg.innerText = ''
+        elMsg.classList = ''
+    }, 2000)
 }
