@@ -28,11 +28,6 @@ th:nth-of-type(4) {
     min-width: 200px;
 }
 
-footer {
-    position: fixed;
-    bottom: 0px;
-}
-
 button {
     margin: 3px;
     padding: 10px;
@@ -75,4 +70,18 @@ table {
 .new-book {
     display: flex;
     flex-direction: column;
+}
+
+footer {
+    display: flex;
+    justify-content: end;
+    gap: 20px;
+
+    padding: 10px;
+    background-color: lightsteelblue;
+    width: 100%;
+    margin-top: 50px;
+    margin-bottom: 0px;
+    align-items: center;
+    justify-content: center;
 }
