@@ -1,5 +1,7 @@
 'use strict'
 
+var gFilterBy = ''
+
 function onInit() {
     getBooks()
     renderBooks()
@@ -7,10 +9,11 @@ function onInit() {
 
 function renderBooks() {
     const elBooksList = document.querySelector('.book-list')
+    const books = getBooks(gFilterBy)
 
     const titles = `<tr><th>Title</th><th>Author</th>
         <th>Price</th><th>Actions</th></tr>`
-    const strHtmls = gBooks.map(book => `<tr onclick="onToggleBook('${book.id}')">
+    const strHtmls = books.map(book => `<tr onclick="onToggleBook('${book.id}')">
         <td>${book.name}</td>
         <td>${book.author}</td>
         <td>${book.price}</td>
@@ -18,10 +21,6 @@ function renderBooks() {
         </tr>`)
 
     elBooksList.innerHTML = titles + strHtmls.join('')
-}
-
-function onSetFilterBy() {
-    console.log('hi')
 }
 
 function onAddBook(ev) {
@@ -41,10 +40,6 @@ function onRemoveBook(ev, bookId) {
     renderBooks()
 }
 
-function onToggleBook(bookId) {
-    toggleBook(bookId)
-    renderBooks()
-}
 
 function onUpdateBook(bookId) {
     const newPrice = prompt('Please enter a new price: ')
@@ -66,4 +61,26 @@ function onReadBook(BookId) {
     elPre.innerHTML = book.imgURL
 
     elModal.showModal()
+}
+
+function onLookupTitle(ev, elValue) {
+    ev.preventDefault()
+    ev.stopPropagation()
+
+    gFilterBy = elValue.value
+
+    renderBooks()
+}
+
+function onClearSearch(ev, elValue) {
+    ev.stopPropagation()
+    ev.preventDefault()
+
+    const searchInput = document.querySelector(".search-input")
+
+    gFilterBy = ''
+
+    renderBooks()
+
+    searchInput.value = ''
 }

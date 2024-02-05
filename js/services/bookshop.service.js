@@ -3,14 +3,19 @@
 var gBooks
 _createBooks()
 
-function getBooks() {
-    // return gBooks = [
-    //     { name: 'Black Fog', author: 'Jane Air', price: '100', id: makeId(), isAvailable: true, imgURL: `<img src="https://edit.org/images/cat/book-covers-big-2019101610.jpg">` },
-    //     { name: 'Ginger', author: 'Shlomo', price: '120', id: makeId(), isAvailable: true, imgURL: `<img src="https://content.wepik.com/statics/90897927/preview-page0.jpg">` },
-    //     { name: 'Matski', author: 'Ingi', price: '80', id: makeId(), isAvailable: true, imgURL: `<img src="https://d1csarkz8obe9u.cloudfront.net/posterpreviews/art-book-cover-design-template-34323b0f0734dccded21e0e3bebf004c_screen.jpg?ts=1637015198">` },
-    // ]
-    return gBooks
+function getBooks(value) {
+    if (!value) return gBooks;
+
+    const valueLower = value.toLowerCase()
+
+    var filteredBooks = gBooks.filter(book => {
+        const nameLower = book.name.toLowerCase()
+        return nameLower.startsWith(valueLower) || nameLower.includes(valueLower)
+    })
+
+    return filteredBooks
 }
+
 
 function addBook(elInput) {
     var bookStr = elInput.value
