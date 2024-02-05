@@ -29,6 +29,7 @@ function onAddBook(ev) {
     const elInput = document.querySelector('.new-book input')
 
     addBook(elInput)
+    renderBooks()
 
     elInput.value = ''
 }
@@ -59,7 +60,6 @@ function onReadBook(BookId) {
     const elPre = elModal.querySelector('pre')
 
     const book = readBook(BookId)
-    // const todoStr = JSON.stringify(book, null, 4)
     
     elTitle.innerText = book.name
     elAuthor.innerText = book.author
