@@ -1,5 +1,8 @@
 'use strict'
 
+
+//make a unique random ID
+
 function makeId(length = 5) {
 	var id = ''
 	var possible = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789'

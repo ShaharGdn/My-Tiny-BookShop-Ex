@@ -1,7 +1,11 @@
 'use strict'
 
+//Data
+
 var gBooks
 _createBooks()
+
+//returns the filtered books from a search or original gBooks.
 
 function getBooks(value) {
     if (!value) return gBooks;
@@ -16,6 +20,7 @@ function getBooks(value) {
     return filteredBooks
 }
 
+// adds a book to the model 
 
 function addBook(elInput) {
     var bookStr = elInput.value
@@ -24,18 +29,16 @@ function addBook(elInput) {
     var author = bookNameAuthorPrice[1]
     var price = bookNameAuthorPrice[2]
 
-    const book = _createBook(name, author, price, `<img src="https://st4.depositphotos.com/14953852/24787/v/450/depositphotos_247872612-stock-illustration-no-image-available-icon-vector.jpg">`)
-
-    if (bookNameAuthorPrice.length < 3) {
-        alert('Error, Please check your input')
-        return
-    }
-
+    const book = _createBook(name, author, price, imgURL=`<img src="https://st4.depositphotos.com/14953852/24787/v/450/depositphotos_247872612-stock-illustration-no-image-available-icon-vector.jpg">`)
+    
     gBooks.unshift(book)
 
     _saveBooks()
+
     return book
 }
+
+
 
 function removeBook(bookId) {
     // Delete
@@ -45,24 +48,17 @@ function removeBook(bookId) {
     _saveBooks()
 }
 
-// function toggleBook(bookId) {
-//     // Update
-//     const book = gBooks.find(book => book.id === bookId)
-//     book.isAvailable = !book.isAvailable
-
-//     return book
-// }
-
+// update books price model 
 function updateBook(bookId, newPrice) {
     const idx = gBooks.findIndex(book => book.id === bookId)
     gBooks[idx].price = newPrice
 
     _saveBooks()
-
 }
 
+
+// Read - Get book details 
 function readBook(BookId) {
-    // Read
     const book = gBooks.find(book => book.id === BookId)
     return book
 }
@@ -70,6 +66,7 @@ function readBook(BookId) {
 
 // Private functions
 
+//make books
 function _createBooks() {
     gBooks = loadFromStorage('booksDB')
     if (!gBooks || gBooks.length === 0) {
@@ -93,6 +90,7 @@ function _createBooks() {
     }
 }
 
+//make a single book
 function _createBook(name, author, price, imgURL) {
     return {
         name,
@@ -103,6 +101,8 @@ function _createBook(name, author, price, imgURL) {
     }
 }
 
+
+//save books to local DB
 function _saveBooks() {
     saveToStorage('booksDB', gBooks)
 }

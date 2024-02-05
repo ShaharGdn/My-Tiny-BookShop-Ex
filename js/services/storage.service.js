@@ -1,5 +1,7 @@
 'use strict'
 
+//service functions for storage
+
 function saveToStorage(key, value) {
     const valStr = JSON.stringify(value)
     localStorage.setItem(key, valStr)

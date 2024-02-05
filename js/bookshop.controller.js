@@ -3,14 +3,20 @@
 var gFilterBy = ''
 
 function onInit() {
+    //do we have storage or render the demo data?
+
     getBooks()
     renderBooks()
 }
 
+
 function renderBooks() {
     const elBooksList = document.querySelector('.book-list')
+    //do we have a filter? if not return gBooks all
     const books = getBooks(gFilterBy)
 
+
+    //build the DOM structure of the list
     const titles = `<tr><th>Title</th><th>Author</th>
         <th>Price</th><th>Actions</th></tr>`
     const strHtmls = books.map(book => `<tr onclick="onToggleBook('${book.id}')">
@@ -23,9 +29,15 @@ function renderBooks() {
     elBooksList.innerHTML = titles + strHtmls.join('')
 }
 
+//event handler for when a book is added by user
 function onAddBook(ev) {
     ev.preventDefault()
     const elInput = document.querySelector('.new-book input')
+
+    if (elInput.split(',').length < 3) {
+        alert('Error, Please check your input')
+        return
+    }
 
     addBook(elInput)
     renderBooks()
@@ -33,6 +45,7 @@ function onAddBook(ev) {
     elInput.value = ''
 }
 
+//event handler for when a book is removed by user
 function onRemoveBook(ev, bookId) {
     ev.stopPropagation()
 
@@ -40,7 +53,7 @@ function onRemoveBook(ev, bookId) {
     renderBooks()
 }
 
-
+//event handler for when a book price is updated by user
 function onUpdateBook(bookId) {
     const newPrice = prompt('Please enter a new price: ')
 
@@ -48,6 +61,7 @@ function onUpdateBook(bookId) {
     renderBooks()
 }
 
+//event handler for when the details button was clicked 
 function onReadBook(BookId) {
     const elModal = document.querySelector('.book-details')
     const elTitle = elModal.querySelector('h2 span')
@@ -63,6 +77,7 @@ function onReadBook(BookId) {
     elModal.showModal()
 }
 
+//event handler for when an input is typed in the search bar - assign value to gFilterBy - an argument for getBooks() to render the filtered books only
 function onLookupTitle(ev, elValue) {
     ev.preventDefault()
     ev.stopPropagation()
@@ -72,6 +87,7 @@ function onLookupTitle(ev, elValue) {
     renderBooks()
 }
 
+//event handler for clearing the filter and the search bar
 function onClearSearch(ev, elValue) {
     ev.stopPropagation()
     ev.preventDefault()
