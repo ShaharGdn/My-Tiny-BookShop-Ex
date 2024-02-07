@@ -84,12 +84,14 @@ function onReadBook(BookId) {
     const elModal = document.querySelector('.book-details')
     const elTitle = elModal.querySelector('h2 span')
     const elAuthor = elModal.querySelector('h3 span')
+    const elRating = elModal.querySelector('h4 span')
     const elPre = elModal.querySelector('pre')
 
     const book = readBook(BookId)
 
     elTitle.innerText = book.name
     elAuthor.innerText = book.author
+    elRating.innerText = '⭐️'.repeat(book.rating)
     elPre.innerHTML = book.imgURL
 
     elModal.showModal()
