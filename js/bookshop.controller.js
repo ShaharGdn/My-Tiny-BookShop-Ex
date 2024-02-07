@@ -16,7 +16,7 @@ function renderBooks() {
     //do we have a filter? if not return gBooks all
     const books = getBooks(gFilterBy)
     
-    const titles = `<tr><th>Title</th><th>Author</th>
+    const titles = `<tr><th>Title</th><th>Author</th><th>Rating</th>
         <th>Price</th><th>Actions</th></tr>`
     
     const emptyMsg = `<td colspan="4">No matching books were found...</td>`
@@ -29,6 +29,7 @@ function renderBooks() {
     const strHtmls = books.map(book => `<tr>
         <td>${book.name}</td>
         <td>${book.author}</td>
+        <td>${'⭐️'.repeat(book.rating)}</td>
         <td>${book.price}</td>
         <td><button class="read" onclick="onReadBook('${book.id}')">Read</button><button class="update" onclick="onUpdateBook('${book.id}')">Update</button><button class="delete" onclick="onRemoveBook(event,'${book.id}')">Delete</button></td>
         </tr>`)

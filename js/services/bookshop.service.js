@@ -22,14 +22,15 @@ function getBooks(value) {
 
 // adds a book to the model 
 function addBook(elInput) {
-    var bookStr = elInput.value
-    var bookNameAuthorPrice = bookStr.split(',')
-    var name = bookNameAuthorPrice[0]
-    var author = bookNameAuthorPrice[1]
-    var price = bookNameAuthorPrice[2]
+    const bookStr = elInput.value
+    const bookNameAuthorPrice = bookStr.split(',')
+    const name = bookNameAuthorPrice[0]
+    const author = bookNameAuthorPrice[1]
+    const price = bookNameAuthorPrice[2]
+    const rating = bookNameAuthorPrice[2]
 
-    const book = _createBook(name, author, price, `<img src="https://st4.depositphotos.com/14953852/24787/v/450/depositphotos_247872612-stock-illustration-no-image-available-icon-vector.jpg">`)
-    
+    const book = _createBook(name, author, rating, price, `<img src="https://st4.depositphotos.com/14953852/24787/v/450/depositphotos_247872612-stock-illustration-no-image-available-icon-vector.jpg">`)
+
     gBooks.unshift(book)
 
     _saveBooks()
@@ -89,10 +90,11 @@ function _createBooks() {
 }
 
 //make a single book
-function _createBook(name, author, price, imgURL) {
+function _createBook(name, author , price, imgURL) {
     return {
         name,
         author,
+        rating: getRandomRating(5),
         price,
         id: makeId(),
         imgURL,
@@ -118,4 +120,8 @@ function getStats() {
     }, { expensive: 0, average: 0, cheap: 0 });
 
     return stats
+}
+
+function getRandomRating(maxRate) {
+    return getRandomIntInclusive(1, maxRate)
 }
