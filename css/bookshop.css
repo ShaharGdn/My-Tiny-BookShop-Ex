@@ -118,3 +118,8 @@ h1 {
     width: 100%;
     text-align: center;
 }
+
+
+fieldset span, fieldset button {
+    margin: 1em;
+}

@@ -7,8 +7,8 @@ _createBooks()
 
 
 //returns the filtered books from a search or original gBooks.
-function getBooks(filterBy) {
-    if (!filterBy) return gBooks;
+function getBooks(filterBy, sortBy) {
+    if (!filterBy && !sortBy) return gBooks;
 
     const valueLower = filterBy.title.toLowerCase()
 
@@ -21,9 +21,31 @@ function getBooks(filterBy) {
         filteredBooks = filteredBooks.filter(book => book.rating >= filterBy.rating)
     }
 
+    if (sortBy.title && !filterBy) {
+        gBooks.sort((book1, book2)=> book1.name.localeCompare(book2.name) * sortBy.title)
+        return gBooks
+    } else if (sortBy.title) {
+        filteredBooks.sort((book1, book2)=> book1.name.localeCompare(book2.name) * sortBy.title)
+    }
+
+    if (sortBy.price && !filterBy) {
+        gBooks.sort((book1, book2)=> (book1.price - book2.price) * sortBy.price)
+        return gBooks
+    } else if (sortBy.price) {  
+        console.log('hi')
+        filteredBooks.sort((book1, book2)=> (book1.price - book2.price) * sortBy.price)
+    }
+
+    if (sortBy.rating && !filterBy) {
+        gBooks.sort((book1, book2)=> (book1.rating - book2.rating) * sortBy.rating)
+        return gBooks
+    } else if (sortBy.rating) {
+        filteredBooks.sort((book1, book2)=> (book1.rating - book2.rating) * sortBy.rating)
+    }
 
     return filteredBooks
 }
+
 
 // adds a book to the model 
 function addBook(elInput) {

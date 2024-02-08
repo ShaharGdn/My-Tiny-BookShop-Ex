@@ -6,6 +6,8 @@ var gFilterBy = {
     rating: ''
 }
 
+var gSortBy = {}
+
 function onInit() {
     //do we have storage or render the demo data?
 
@@ -14,11 +16,10 @@ function onInit() {
     updateStats()
 }
 
-
 function renderBooks() {
     const elBooksList = document.querySelector('.book-list')
     //do we have a filter? if not return gBooks all
-    const books = getBooks(gFilterBy)
+    const books = getBooks(gFilterBy, gSortBy)
 
     const titles = `<tr><th>Title</th><th>Author</th><th>Rating</th>
         <th>Price</th><th>Actions</th></tr>`
@@ -112,22 +113,29 @@ function onLookupTitle(ev, elValue) {
 }
 
 //event handler for clearing the filter and the search bar
-function onClearSearch(ev) {
+function onClearFilters(ev) {
     ev.stopPropagation()
     ev.preventDefault()
 
     const searchInput = document.querySelector(".search-input")
-    const elRatingFilter = document.querySelector(".rating-filters input")
+    const elRatingFilter = document.querySelector(".filters input")
+    const elAscending = document.querySelector('.ascending')
+    const elDescending = document.querySelector('.descending')
+    const elSortBy = document.querySelector('.sort-by')
+
 
     gFilterBy = {
         title: '',
         rating: ''
     }
 
-    renderBooks()
-
     searchInput.value = ''
     elRatingFilter.value = ''
+    elAscending.checked = false
+    elDescending.checked = false
+    elSortBy.selectedIndex = 0
+
+    renderBooks()
 }
 
 //switch case for different msg types
@@ -171,7 +179,6 @@ function updateStats() {
 }
 
 function onFilterRating(elInput) {
-    console.log('filter rating:')
     const rating = elInput.value
     elInput.title = rating
 
@@ -181,6 +188,35 @@ function onFilterRating(elInput) {
 }
 
 
-function onSortBy(type) {
-    
+function onSortBy(elOption) {
+    const elAscending = document.querySelector('.ascending')
+    const elDescending = document.querySelector('.descending')
+
+    gSortBy[elOption.value] = elDescending.checked ? -1 : 1
+
+    renderBooks()
+}
+
+function OnCheckAscending(el) {
+    const elDescending = document.querySelector('.descending')
+    const elOption = document.querySelector('.sort-by')
+
+
+    elDescending.checked = false
+
+    gSortBy[elOption.value] = elDescending.checked ? -1 : 1
+
+
+    renderBooks()
+}
+
+function OnCheckDescending(el) {
+    const elAscending = document.querySelector('.ascending')
+    const elOption = document.querySelector('.sort-by')
+
+    elAscending.checked = false
+
+    gSortBy[elOption.value] = el.checked ? -1 : 1
+
+    renderBooks()
 }

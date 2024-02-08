@@ -17,26 +17,26 @@
         <input class="search-input" type="text" placeholder="Enter a title name here..." oninput="onLookupTitle(event, this)">
     </form>
     
-    <!-- 
-        <section>
-            <fieldset class="filters">
-                <legend>Filter by:</legend>
-                <span>Type:</span>
-                <select class="select-filter">
-                    <option value="">Select Filter</option>
-                    <option>Title</option>
-                    <option>Rating</option>
-                </select>
-            </fieldset>
-            
-        </section> -->
-        
-        <section class="rating-filters">
+
+        <section class="filters">
             <fieldset>
-                <legend>Filter By Rating</legend>
+                <legend>Filters & Sorting</legend>
                 <span>Minimum Rating:</span>
                 <input type="range" min="1" max="5" value="1" oninput="onFilterRating(this)">
-                <button onclick="onClearSearch(event)">clear filters</button>
+                <span>Sort by:</span>
+                <select class="sort-by" onchange="onSortBy(this)">
+                    <option value="">Select Option</option>
+                    <option value="title">Title</option>
+                    <option value="price">Price</option>
+                    <option value="rating">Rating</option>
+                </select>
+                <label>
+                    <span>Ascending</span>
+                    <input class="ascending" type="radio" value="1" oninput="OnCheckAscending(this)">
+                    <span>Descending</span>
+                    <input class="descending" type="radio" value="-1" oninput="OnCheckDescending(this)">
+                </label>
+                <button onclick="onClearFilters(event)">clear filters</button>
             </fieldset>
         </section>
         
