@@ -7,15 +7,20 @@ _createBooks()
 
 
 //returns the filtered books from a search or original gBooks.
-function getBooks(value) {
-    if (!value) return gBooks;
+function getBooks(filterBy) {
+    if (!filterBy) return gBooks;
 
-    const valueLower = value.toLowerCase()
+    const valueLower = filterBy.title.toLowerCase()
 
     var filteredBooks = gBooks.filter(book => {
         const nameLower = book.name.toLowerCase()
         return nameLower.startsWith(valueLower) || nameLower.includes(valueLower)
     })
+
+    if (filterBy.rating) {
+        filteredBooks = filteredBooks.filter(book => book.rating >= filterBy.rating)
+    }
+
 
     return filteredBooks
 }
@@ -90,7 +95,7 @@ function _createBooks() {
 }
 
 //make a single book
-function _createBook(name, author , price, imgURL) {
+function _createBook(name, author, price, imgURL) {
     return {
         name,
         author,
@@ -125,3 +130,5 @@ function getStats() {
 function getRandomRating(maxRate) {
     return getRandomIntInclusive(1, maxRate)
 }
+
+

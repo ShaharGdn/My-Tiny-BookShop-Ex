@@ -15,9 +15,31 @@
     <form onsubmit="onLookupTitle(event, this)" class="search-bar">
         <span>Search Title:</span>
         <input class="search-input" type="text" placeholder="Enter a title name here..." oninput="onLookupTitle(event, this)">
-        <button onclick="onClearSearch(event, this)">clear</button>
     </form>
-
+    
+    <!-- 
+        <section>
+            <fieldset class="filters">
+                <legend>Filter by:</legend>
+                <span>Type:</span>
+                <select class="select-filter">
+                    <option value="">Select Filter</option>
+                    <option>Title</option>
+                    <option>Rating</option>
+                </select>
+            </fieldset>
+            
+        </section> -->
+        
+        <section class="rating-filters">
+            <fieldset>
+                <legend>Filter By Rating</legend>
+                <span>Minimum Rating:</span>
+                <input type="range" min="1" max="5" value="1" oninput="onFilterRating(this)">
+                <button onclick="onClearSearch(event)">clear filters</button>
+            </fieldset>
+        </section>
+        
     <p></p>
 
     <table class="book-list">

@@ -71,7 +71,7 @@ pre img {
 
 table {
     table-layout: fixed;
-    width: 450px;
+    min-width: 500px;
     text-align: center;
 }
 

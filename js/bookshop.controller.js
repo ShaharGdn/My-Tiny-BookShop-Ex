@@ -1,6 +1,10 @@
 'use strict'
 
-var gFilterBy = ''
+// var gFilterBy = ''
+var gFilterBy = {
+    title: '',
+    rating: ''
+}
 
 function onInit() {
     //do we have storage or render the demo data?
@@ -15,11 +19,11 @@ function renderBooks() {
     const elBooksList = document.querySelector('.book-list')
     //do we have a filter? if not return gBooks all
     const books = getBooks(gFilterBy)
-    
+
     const titles = `<tr><th>Title</th><th>Author</th><th>Rating</th>
         <th>Price</th><th>Actions</th></tr>`
-    
-    const emptyMsg = `<td colspan="4">No matching books were found...</td>`
+
+    const emptyMsg = `<td colspan="5">No matching books were found...</td>`
 
     if (books.length === 0) {
         return elBooksList.innerHTML = titles + emptyMsg
@@ -102,23 +106,28 @@ function onLookupTitle(ev, elValue) {
     ev.preventDefault()
     ev.stopPropagation()
 
-    gFilterBy = elValue.value
+    gFilterBy.title = elValue.value
 
     renderBooks()
 }
 
 //event handler for clearing the filter and the search bar
-function onClearSearch(ev, elValue) {
+function onClearSearch(ev) {
     ev.stopPropagation()
     ev.preventDefault()
 
     const searchInput = document.querySelector(".search-input")
+    const elRatingFilter = document.querySelector(".rating-filters input")
 
-    gFilterBy = ''
+    gFilterBy = {
+        title: '',
+        rating: ''
+    }
 
     renderBooks()
 
     searchInput.value = ''
+    elRatingFilter.value = ''
 }
 
 //switch case for different msg types
@@ -159,4 +168,19 @@ function updateStats() {
     elExp.innerText = stats.expensive
     elCheap.innerText = stats.cheap
     elAvg.innerText = stats.average
+}
+
+function onFilterRating(elInput) {
+    console.log('filter rating:')
+    const rating = elInput.value
+    elInput.title = rating
+
+    gFilterBy.rating = rating
+
+    renderBooks()
+}
+
+
+function onSortBy(type) {
+    
 }
