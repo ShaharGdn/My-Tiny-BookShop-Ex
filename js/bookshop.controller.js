@@ -1,10 +1,12 @@
-'use strict'
 
+'use strict'
 const gQueryOptions = {
     filterBy: { title: '', rating: 0 },
     sortBy: {},
-    page: { idx: 0, size: 3 }
+    page: { idx: 0, size: 10 }
 }
+
+var gEditedBook = null
 
 function onInit() {
     //do we have storage or render the demo data?
@@ -12,6 +14,7 @@ function onInit() {
     getBooks()
     renderBooks()
     updateStats()
+    console.log('gBooks:', gBooks)
 }
 
 function renderBooks() {
@@ -34,7 +37,9 @@ function renderBooks() {
         <td>${book.author}</td>
         <td>${'⭐️'.repeat(book.rating)}</td>
         <td>${book.price}</td>
-        <td><button class="read" onclick="onReadBook('${book.id}')">Read</button><button class="update" onclick="onUpdateBook('${book.id}')">Update</button><button class="delete" onclick="onRemoveBook(event,'${book.id}')">Delete</button></td>
+        <td><button class="read" onclick="onReadBook('${book.id}')">Read</button>
+        <button class="update" onclick="openEditModal('${book.id}')">Update</button>
+        <button class="delete" onclick="onRemoveBook(event,'${book.id}')">Delete</button></td>
         </tr>`)
 
     elBooksList.innerHTML = titles + strHtmls.join('')
@@ -43,26 +48,66 @@ function renderBooks() {
 }
 
 //event handler for when a book is added by user
-function onAddBook(ev) {
-    ev.preventDefault()
-    const elInput = document.querySelector('.new-book input')
+function onEditBook() {
+    const elModal = document.querySelector('.edit-book')
+    const elH3 = document.querySelector('.edit-book h3')
 
-    const valueArr = elInput.value.split(',')
+    const elRating = document.querySelector('.edit-rating')
+    const rating = +elRating.getAttribute('data-value')
+    const name = document.querySelector('.edit-title').value
+    const author = document.querySelector('.edit-author').value
+    const price = document.querySelector('.edit-price').value
 
-    if (valueArr.length < 3) {
-        alert('Error, Please check your input')
-        return
+    if (gEditedBook) {
+        gEditedBook.name = name
+        gEditedBook.rating = rating
+        gEditedBook.author = author
+        gEditedBook.price = price
+
+        console.log('gEditedBook:', gEditedBook)
+
+        updateBook(gEditedBook)
+        closeModal()
+        showMsg('edit')
+        renderBooks()
+        return gEditedBook
     }
 
-    addBook(elInput)
-    renderBooks()
 
-    elInput.value = ''
+    const book = {
+        name,
+        author,
+        rating,
+        price,
+    }
 
+    addBook(book)
+    closeModal()
     showMsg('add')
+    renderBooks()
+    return book
 }
+// function onAddBook(ev) {
+//     ev.preventDefault()
+//     const elInput = document.querySelector('.new-book input')
+
+//     const valueArr = elInput.value.split(',')
+
+//     if (valueArr.length < 3) {
+//         alert('Error, Please check your input')
+//         return
+//     }
+
+//     addBook(elInput)
+//     renderBooks()
+
+//     elInput.value = ''
+
+//     showMsg('add')
+// }
 
 //event handler for when a book is removed by user
+
 function onRemoveBook(ev, bookId) {
     ev.stopPropagation()
 
@@ -74,12 +119,17 @@ function onRemoveBook(ev, bookId) {
 
 //event handler for when a book price is updated by user
 function onUpdateBook(bookId) {
-    const newPrice = prompt('Please enter a new price: ')
+    const elModal = document.querySelector('.edit-book')
+    const elH3 = document.querySelector('.edit-book h3')
 
-    updateBook(bookId, newPrice)
-    renderBooks()
+    elH3.innerText = 'Edit Book'
+    elModal.classList.remove('hidden')
 
-    showMsg('update')
+
+    // updateBook(bookId, newPrice)
+    // renderBooks()
+
+    // showMsg('update')
 }
 
 //event handler for when the details button was clicked 
@@ -184,7 +234,6 @@ function onFilterRating(elInput) {
     renderBooks()
 }
 
-
 function onSortBy(elOption) {
     const elAscending = document.querySelector('.ascending')
     const elDescending = document.querySelector('.descending')
@@ -234,4 +283,71 @@ function onNextPage() {
     else gQueryOptions.page.idx = 0
 
     renderBooks()
+}
+
+function onEditRating(event, btn) {
+    event.preventDefault()
+
+    const editRatingElement = document.querySelector('.edit-rating')
+    const elBtnValue = +btn.value
+    var dataValue = +editRatingElement.getAttribute('data-value')
+    var spanCurrValue = dataValue
+
+    if (spanCurrValue === 5 && elBtnValue === 1) {
+        return editRatingElement.innerText = '⭐️'.repeat(5)
+    } else if (spanCurrValue === 1 && elBtnValue === -1) {
+        return editRatingElement.innerText = '⭐️'.repeat(1)
+    }
+
+    editRatingElement.setAttribute('data-value', dataValue += elBtnValue)
+    editRatingElement.innerText = '⭐️'.repeat(spanCurrValue += elBtnValue)
+}
+
+function openEditModal(bookID) {
+    const elH3 = document.querySelector('.edit-book h3')
+    const elModal = document.querySelector('.edit-book')
+
+    elH3.innerText = 'Edit Book'
+    elModal.classList.remove('hidden')
+    gEditedBook = {}
+    gEditedBook.id = bookID
+}
+
+// function openEditModal(bookID) {
+//     const elH3 = document.querySelector('.edit-book h3')
+//     const elModal = document.querySelector('.edit-book')
+
+//     if(bookID) {
+//         elH3.innerText = 'Edit Book'
+//         elModal.classList.remove('hidden')
+//         console.log('book id:',bookID)
+//         gEditedBook = {}
+//         gEditedBook.id = bookID
+//         return
+//     }
+
+//     elH3.innerText = 'Add Book'
+
+//     elModal.classList.remove('hidden')
+// }
+
+function openAddModal(ev) {
+    ev.stopPropagation()
+    ev.preventDefault()
+    const elH3 = document.querySelector('.edit-book h3')
+    const elModal = document.querySelector('.edit-book')
+
+    elH3.innerText = 'Add Book'
+
+    elModal.classList.remove('hidden')
+}
+
+function closeModal() {
+    const elModal = document.querySelector('.edit-book')
+    const elForm = document.querySelector('.edit-form')
+
+    elModal.classList.add('hidden')
+    elForm.reset()
+
+    gEditedBook = null
 }

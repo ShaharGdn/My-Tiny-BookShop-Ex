@@ -69,22 +69,31 @@ function filterBooks(options) {
 
 // adds a book to the model 
 
-function addBook(elInput) {
-    const bookStr = elInput.value
-    const bookNameAuthorPrice = bookStr.split(',')
-    const name = bookNameAuthorPrice[0]
-    const author = bookNameAuthorPrice[1]
-    const price = bookNameAuthorPrice[2]
-    const rating = bookNameAuthorPrice[2]
+function addBook(book) {
+    const newBook = _createBook(book.name, book.author, book.rating, book.price, `<img src="https://st4.depositphotos.com/14953852/24787/v/450/depositphotos_247872612-stock-illustration-no-image-available-icon-vector.jpg">`)
 
-    const book = _createBook(name, author, rating, price, `<img src="https://st4.depositphotos.com/14953852/24787/v/450/depositphotos_247872612-stock-illustration-no-image-available-icon-vector.jpg">`)
-
-    gBooks.unshift(book)
+    gBooks.unshift(newBook)
 
     _saveBooks()
 
     return book
 }
+// function addBook(elInput) {
+//     const bookStr = elInput.value
+//     const bookNameAuthorPrice = bookStr.split(',')
+//     const name = bookNameAuthorPrice[0]
+//     const author = bookNameAuthorPrice[1]
+//     const price = bookNameAuthorPrice[2]
+//     const rating = bookNameAuthorPrice[2]
+
+//     const book = _createBook(name, author, rating, price, `<img src="https://st4.depositphotos.com/14953852/24787/v/450/depositphotos_247872612-stock-illustration-no-image-available-icon-vector.jpg">`)
+
+//     gBooks.unshift(book)
+
+//     _saveBooks()
+
+//     return book
+// }
 
 function removeBook(bookId) {
     // Delete
@@ -95,9 +104,14 @@ function removeBook(bookId) {
 }
 
 // update books price model 
-function updateBook(bookId, newPrice) {
-    const idx = gBooks.findIndex(book => book.id === bookId)
-    gBooks[idx].price = newPrice
+function updateBook(editedBook) {
+    const idx = gBooks.findIndex(book => book.id === editedBook.id)
+    gBooks[idx].name = editedBook.name
+    gBooks[idx].author = editedBook.author
+    gBooks[idx].price = editedBook.price
+    gBooks[idx].rating = editedBook.rating
+
+    gEditedBook = null
 
     _saveBooks()
 }
@@ -145,6 +159,17 @@ function _createBook(name, author, price, imgURL) {
         imgURL,
     }
 }
+// //make a single book
+// function _createBook(name, author, rating, price, imgURL) {
+//     return {
+//         name,
+//         author,
+//         rating: rating ? rating : getRandomRating(5),
+//         price,
+//         id: makeId(),
+//         imgURL,
+//     }
+// }
 
 //save books to local DB
 function _saveBooks() {

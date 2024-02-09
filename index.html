@@ -14,44 +14,37 @@
 
     <form onsubmit="onLookupTitle(event, this)" class="search-bar">
         <span>Search Title:</span>
-        <input class="search-input" type="text" placeholder="Enter a title name here..." oninput="onLookupTitle(event, this)">
+        <input class="search-input" type="text" placeholder="Enter a title name here..."
+            oninput="onLookupTitle(event, this)">
+        <button onclick="openAddModal(event)">Add A Book</button>
     </form>
 
-        <section class="filters">
-            <fieldset>
-                <legend>Filters & Sorting</legend>
-                <span>Minimum Rating:</span>
-                <input type="range" min="1" max="5" value="1" oninput="onFilterRating(this)">
-                <span>Sort by:</span>
-                <select class="sort-by" onchange="onSortBy(this)">
-                    <option value="">Select Option</option>
-                    <option value="title">Title</option>
-                    <option value="price">Price</option>
-                    <option value="rating">Rating</option>
-                </select>
-                <label>
-                    <span>Ascending</span>
-                    <input class="ascending" type="radio" value="1" oninput="onCheckAscending(this)">
-                    <span>Descending</span>
-                    <input class="descending" type="radio" value="-1" oninput="onCheckDescending(this)">
-                </label>
-                <button onclick="onClearFilters(event)">clear filters</button>
-            </fieldset>
-        </section>
-        
+    <section class="filters">
+        <fieldset>
+            <legend>Filters & Sorting</legend>
+            <span>Minimum Rating:</span>
+            <input type="range" min="1" max="5" value="1" oninput="onFilterRating(this)">
+            <span>Sort by:</span>
+            <select class="sort-by" onchange="onSortBy(this)">
+                <option value="">Select Option</option>
+                <option value="title">Title</option>
+                <option value="price">Price</option>
+                <option value="rating">Rating</option>
+            </select>
+            <label>
+                <input class="ascending" type="radio" value="1" oninput="onCheckAscending(this)">
+                <span>Ascending</span>
+                <input class="descending" type="radio" value="-1" oninput="onCheckDescending(this)">
+                <span>Descending</span>
+            </label>
+            <button onclick="onClearFilters(event)">Clear Filters</button>
+        </fieldset>
+    </section>
+
     <p></p>
 
-    <section class="page-btns">
-        <button onclick="onPrevPage()"><<</button>
-        <button onclick="onNextPage()">>></button>
-    </section>
     <table class="book-list">
     </table>
-    
-    <form onsubmit="onAddBook(event)" class="new-book">
-        <input type="text" placeholder="Add a book, author & price divided by a comma">
-        <button class="add-btn">Add</button>
-    </form>
 
     <dialog class="book-details">
         <form method="dialog">
@@ -62,7 +55,29 @@
             <button>x</button>
         </form>
     </dialog>
-    
+
+    <dialog class="edit-book hidden">
+        <h3>Add A Book</h3>
+        <form onsubmit="onEditBook(event)" class="edit-form" method="dialog">
+            <span>Title:</span><input class="edit-title" required type="text">
+            <span>Author:</span><input class="edit-author" required type="text">
+            <span>Price:</span><input class="edit-price" required type="number">
+            <span>Rating:</span>
+            <button value="1" onclick="onEditRating(event, this)">+</button>
+            <button value="-1" onclick="onEditRating(event, this)">-</button>
+            <span class="edit-rating" data-value="1" style="display: block;">⭐️</span>
+            <section>
+                <button style="margin-top: 15px;" type="submit">Submit</button>
+                <button onclick="closeModal()" type="reset">Cancel</button>
+            </section>
+        </form>
+    </dialog>
+
+    <section class="page-btns">
+        <button onclick="onPrevPage()"><<</button>
+        <button onclick="onNextPage()">>></button>
+    </section>
+
     <footer>
         <span>Expensive:</span>
         <span class="expensive-books"></span>
