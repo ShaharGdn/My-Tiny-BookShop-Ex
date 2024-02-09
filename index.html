@@ -16,7 +16,6 @@
         <span>Search Title:</span>
         <input class="search-input" type="text" placeholder="Enter a title name here..." oninput="onLookupTitle(event, this)">
     </form>
-    
 
         <section class="filters">
             <fieldset>
@@ -32,9 +31,9 @@
                 </select>
                 <label>
                     <span>Ascending</span>
-                    <input class="ascending" type="radio" value="1" oninput="OnCheckAscending(this)">
+                    <input class="ascending" type="radio" value="1" oninput="onCheckAscending(this)">
                     <span>Descending</span>
-                    <input class="descending" type="radio" value="-1" oninput="OnCheckDescending(this)">
+                    <input class="descending" type="radio" value="-1" oninput="onCheckDescending(this)">
                 </label>
                 <button onclick="onClearFilters(event)">clear filters</button>
             </fieldset>
@@ -42,6 +41,10 @@
         
     <p></p>
 
+    <section class="page-btns">
+        <button onclick="onPrevPage()"><<</button>
+        <button onclick="onNextPage()">>></button>
+    </section>
     <table class="book-list">
     </table>
     

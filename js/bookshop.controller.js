@@ -1,12 +1,10 @@
 'use strict'
 
-// var gFilterBy = ''
-var gFilterBy = {
-    title: '',
-    rating: ''
+const gQueryOptions = {
+    filterBy: { title: '', rating: 0 },
+    sortBy: {},
+    page: { idx: 0, size: 3 }
 }
-
-var gSortBy = {}
 
 function onInit() {
     //do we have storage or render the demo data?
@@ -19,7 +17,7 @@ function onInit() {
 function renderBooks() {
     const elBooksList = document.querySelector('.book-list')
     //do we have a filter? if not return gBooks all
-    const books = getBooks(gFilterBy, gSortBy)
+    const books = getBooks(gQueryOptions)
 
     const titles = `<tr><th>Title</th><th>Author</th><th>Rating</th>
         <th>Price</th><th>Actions</th></tr>`
@@ -107,16 +105,13 @@ function onLookupTitle(ev, elValue) {
     ev.preventDefault()
     ev.stopPropagation()
 
-    gFilterBy.title = elValue.value
+    gQueryOptions.filterBy.title = elValue.value
 
     renderBooks()
 }
 
 //event handler for clearing the filter and the search bar
-function onClearFilters(ev) {
-    ev.stopPropagation()
-    ev.preventDefault()
-
+function onClearFilters() {
     const searchInput = document.querySelector(".search-input")
     const elRatingFilter = document.querySelector(".filters input")
     const elAscending = document.querySelector('.ascending')
@@ -124,10 +119,12 @@ function onClearFilters(ev) {
     const elSortBy = document.querySelector('.sort-by')
 
 
-    gFilterBy = {
+    gQueryOptions.filterBy = {
         title: '',
-        rating: ''
+        rating: 0
     }
+
+    gQueryOptions.sortBy = {}
 
     searchInput.value = ''
     elRatingFilter.value = ''
@@ -182,7 +179,7 @@ function onFilterRating(elInput) {
     const rating = elInput.value
     elInput.title = rating
 
-    gFilterBy.rating = rating
+    gQueryOptions.filterBy.rating = rating
 
     renderBooks()
 }
@@ -192,31 +189,49 @@ function onSortBy(elOption) {
     const elAscending = document.querySelector('.ascending')
     const elDescending = document.querySelector('.descending')
 
-    gSortBy[elOption.value] = elDescending.checked ? -1 : 1
+    gQueryOptions.sortBy[elOption.value] = elDescending.checked ? -1 : 1
 
     renderBooks()
 }
 
-function OnCheckAscending(el) {
+function onCheckAscending(el) {
     const elDescending = document.querySelector('.descending')
     const elOption = document.querySelector('.sort-by')
 
 
     elDescending.checked = false
 
-    gSortBy[elOption.value] = elDescending.checked ? -1 : 1
+    gQueryOptions.sortBy[elOption.value] = elDescending.checked ? -1 : 1
 
 
     renderBooks()
 }
 
-function OnCheckDescending(el) {
+function onCheckDescending(el) {
     const elAscending = document.querySelector('.ascending')
     const elOption = document.querySelector('.sort-by')
 
     elAscending.checked = false
 
-    gSortBy[elOption.value] = el.checked ? -1 : 1
+    gQueryOptions.sortBy[elOption.value] = el.checked ? -1 : 1
+
+    renderBooks()
+}
+
+function onPrevPage() {
+    var booksCount = getBooksCount(gQueryOptions)
+
+    if (gQueryOptions.page.idx > 0) gQueryOptions.page.idx--
+    else gQueryOptions.page.idx = Math.floor(booksCount / ((gQueryOptions.page.idx + 1) * gQueryOptions.page.size))
+
+    renderBooks()
+}
+
+function onNextPage() {
+    var booksCount = getBooksCount(gQueryOptions)
+
+    if (booksCount > ((gQueryOptions.page.idx + 1) * gQueryOptions.page.size)) gQueryOptions.page.idx++
+    else gQueryOptions.page.idx = 0
 
     renderBooks()
 }
