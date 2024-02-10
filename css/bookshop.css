@@ -7,29 +7,6 @@ body {
     font-family: Assistant;
 }
 
-.book-list {
-    display: flex;
-    flex-direction: column;
-    border-collapse: collapse;
-    margin: 10px 0px;
-}
-
-tr:nth-child(odd) {
-    background-color: #b9b9b952;
-}
-
-th,
-td {
-    border: 1px solid black;
-    padding: 10px;
-    max-width: max-content;
-    min-width: 70px;
-}
-
-th:nth-of-type(5) {
-    min-width: 200px;
-}
-
 button {
     margin: 3px;
     padding: 10px;
@@ -67,12 +44,6 @@ form input {
 
 pre img {
     height: 200px;
-}
-
-table {
-    table-layout: fixed;
-    min-width: 500px;
-    text-align: center;
 }
 
 .new-book {
@@ -117,8 +88,9 @@ h1 {
     background-color: rgb(233, 223, 206);
     width: 100%;
     text-align: center;
+    color: white;
+    font-size: 60px;
 }
-
 
 fieldset span, fieldset button {
     margin: 1em;
@@ -138,4 +110,31 @@ fieldset span, fieldset button {
 
 .hidden {
     display: none;
+}
+
+
+table {
+    margin-top: 30px;
+    margin-bottom: 30px;
+    border-collapse: collapse;
+    width: 50%;
+    text-align: center;
+}
+
+thead {
+    background-color: rgba(233, 223, 206, 0.371); 
+}
+
+th, td {
+    border: 1px solid black;
+    padding: 10px;
+    min-width: 170px;
+}
+
+tr:nth-of-type(even) {
+    background-color: rgba(233, 223, 206, 0.201);
+}
+
+th:nth-of-type(5), td:nth-of-type(5) {
+    min-width: 200px;
 }

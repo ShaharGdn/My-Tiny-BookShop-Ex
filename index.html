@@ -32,9 +32,11 @@
                 <option value="rating">Rating</option>
             </select>
             <label>
-                <input class="ascending" type="radio" value="1" oninput="onCheckAscending(this)">
+                <!-- <input class="ascending" name="dir" type="radio" checked oninput="onSortBy(this)"> -->
+                <input class="ascending" name="dir" type="radio" value="1" oninput="onCheckAscending(this)">
                 <span>Ascending</span>
-                <input class="descending" type="radio" value="-1" oninput="onCheckDescending(this)">
+                <!-- <input class="descending" name="dir" type="radio" oninput="onSortBy(this)"> -->
+                <input class="descending" name="dir" type="radio" value="-1" oninput="onCheckDescending(this)">
                 <span>Descending</span>
             </label>
             <button onclick="onClearFilters(event)">Clear Filters</button>
@@ -43,8 +45,21 @@
 
     <p></p>
 
-    <table class="book-list">
+    <table id="booksTable">
+        <thead>
+            <tr>
+                <th data-value="title" onclick="onSortHeader(this)">Title</th>
+                <th data-value="author" onclick="onSortHeader(this)">Author</th>
+                <th data-value="rating" onclick="onSortHeader(this)">Rating</th>
+                <th data-value="price" onclick="onSortHeader(this)">Price</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody class="book-list"></tbody>
     </table>
+    
+    <!-- <table class="book-list">
+    </table> -->
 
     <dialog class="book-details">
         <form method="dialog">
@@ -75,7 +90,7 @@
 
     <section class="page-btns">
         <button onclick="onPrevPage()"><<</button>
-        <button onclick="onNextPage()">>></button>
+                <button onclick="onNextPage()">>></button>
     </section>
 
     <footer>

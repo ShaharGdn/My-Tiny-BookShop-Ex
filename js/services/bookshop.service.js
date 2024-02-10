@@ -12,14 +12,14 @@ function getBooks(options = {}) {
 
     var books = filterBooks(options)
 
-    // books = sortBooks(options, books)
-
     if (options.sortBy.title) {
         books.sort((book1, book2) => book1.name.localeCompare(book2.name) * options.sortBy.title)
     } else if (options.sortBy.price) {
         books.sort((book1, book2) => (book1.price - book2.price) * options.sortBy.price)
     } else if (options.sortBy.rating) {
         books.sort((book1, book2) => (book1.rating - book2.rating) * options.sortBy.rating)
+    } else if (options.sortBy.author) {
+        books.sort((book1, book2) => book1.author.localeCompare(book2.author) * options.sortBy.author)
     }
 
     if (options.page) {
@@ -34,7 +34,6 @@ function getBooks(options = {}) {
 function getBooksCount(options) {
     return filterBooks(options).length
 }
-
 
 function filterBooks(options) {
     const valueLower = options.filterBy.title.toLowerCase()
@@ -51,24 +50,6 @@ function filterBooks(options) {
     return books
 }
 
-// function sortBooks(options, books) {
-//     if (options.sortBy.title) {
-//         books.sort((book1, book2) => book1.name.localeCompare(book2.name) * options.sortBy.title)
-//     }
-
-//     if (options.sortBy.price) {
-//         console.log('hi')
-//         books.sort((book1, book2) => (book1.price - book2.price) * options.sortBy.price)
-//     }
-
-//     if (options.sortBy.rating) {
-//         books.sort((book1, book2) => (book1.rating - book2.rating) * options.sortBy.rating)
-//     }
-// }
-
-
-// adds a book to the model 
-
 function addBook(book) {
     const newBook = _createBook(book.name, book.author, book.rating, book.price, `<img src="https://st4.depositphotos.com/14953852/24787/v/450/depositphotos_247872612-stock-illustration-no-image-available-icon-vector.jpg">`)
 
@@ -78,22 +59,6 @@ function addBook(book) {
 
     return book
 }
-// function addBook(elInput) {
-//     const bookStr = elInput.value
-//     const bookNameAuthorPrice = bookStr.split(',')
-//     const name = bookNameAuthorPrice[0]
-//     const author = bookNameAuthorPrice[1]
-//     const price = bookNameAuthorPrice[2]
-//     const rating = bookNameAuthorPrice[2]
-
-//     const book = _createBook(name, author, rating, price, `<img src="https://st4.depositphotos.com/14953852/24787/v/450/depositphotos_247872612-stock-illustration-no-image-available-icon-vector.jpg">`)
-
-//     gBooks.unshift(book)
-
-//     _saveBooks()
-
-//     return book
-// }
 
 function removeBook(bookId) {
     // Delete
@@ -149,11 +114,11 @@ function _createBooks() {
 }
 
 //make a single book
-function _createBook(name, author, price, imgURL) {
+function _createBook(name, author,rating= getRandomRating(5), price, imgURL) {
     return {
         name,
         author,
-        rating: getRandomRating(5),
+        rating,
         price,
         id: makeId(),
         imgURL,
