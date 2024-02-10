@@ -33,7 +33,7 @@
             </select>
             <label>
                 <!-- <input class="ascending" name="dir" type="radio" checked oninput="onSortBy(this)"> -->
-                <input class="ascending" name="dir" type="radio" value="1" oninput="onCheckAscending(this)">
+                <input class="ascending" name="dir" type="radio" value="1" oninput="onCheckAscending(this)" checked>
                 <span>Ascending</span>
                 <!-- <input class="descending" name="dir" type="radio" oninput="onSortBy(this)"> -->
                 <input class="descending" name="dir" type="radio" value="-1" oninput="onCheckDescending(this)">
@@ -67,7 +67,7 @@
             <h3>Author: <span></span></h3>
             <h4>Rating: <span></span></h4>
             <pre></pre>
-            <button>x</button>
+            <button onclick="closeDetails()">x</button>
         </form>
     </dialog>
 

@@ -3,7 +3,8 @@
 const gQueryOptions = {
     filterBy: { title: '', rating: 0 },
     sortBy: {},
-    page: { idx: 0, size: 10 }
+    page: { idx: 0, size: 10 },
+    read: {isRead: false, bookId: null}
 }
 
 var gEditedBook = null
@@ -12,14 +13,18 @@ function onInit() {
     //do we have storage or render the demo data?
 
     getBooks()
-    renderBooks()
     updateStats()
-    console.log('gBooks:', gBooks)
+    readQueryParams()
+    renderBooks()
+
+    if(gQueryOptions.bookId) {
+        console.log('read:')
+    }
 }
 
 function renderBooks() {
-    const elBooksList = document.querySelector('.book-list');
-    const books = getBooks(gQueryOptions);
+    const elBooksList = document.querySelector('.book-list')
+    const books = getBooks(gQueryOptions)
 
     if (books.length === 0) {
         // If there are no matching books, display an empty message
@@ -40,15 +45,14 @@ function renderBooks() {
                 <button class="delete" onclick="onRemoveBook(event,'${book.id}')">Delete</button>
             </td>
         </tr>
-    `);
+    `)
 
     // Join the rows and update the table body content
-    elBooksList.innerHTML = rowsHtml.join('');
+    elBooksList.innerHTML = rowsHtml.join('')
 
     // Update any statistics or other UI elements as needed
-    updateStats();
+    updateStats()
 }
-
 
 // function renderBooks() {
 //     const elBooksList = document.querySelector('.book-list')
@@ -168,6 +172,7 @@ function onUpdateBook(bookId) {
 }
 //event handler for when the details button was clicked 
 function onReadBook(BookId) {
+    console.log('hello:')
     const elModal = document.querySelector('.book-details')
     const elTitle = elModal.querySelector('h2 span')
     const elAuthor = elModal.querySelector('h3 span')
@@ -181,6 +186,11 @@ function onReadBook(BookId) {
     elRating.innerText = '⭐️'.repeat(book.rating)
     elPre.innerHTML = book.imgURL
 
+    gQueryOptions.read.isRead = true
+    gQueryOptions.read.bookId = BookId
+
+    setQueryParams()
+
     elModal.showModal()
 }
 //event handler for when an input is typed in the search bar - assign value to gFilterBy - an argument for getBooks() to render the filtered books only
@@ -190,6 +200,7 @@ function onLookupTitle(ev, elValue) {
 
     gQueryOptions.filterBy.title = elValue.value
 
+    setQueryParams()
     renderBooks()
 }
 //event handler for clearing the filter and the search bar
@@ -262,6 +273,7 @@ function onFilterRating(elInput) {
 
     gQueryOptions.filterBy.rating = rating
 
+    setQueryParams()
     renderBooks()
 }
 
@@ -277,6 +289,7 @@ function onSortBy(elOption) {
 
     gQueryOptions.page.idx = 0
 
+    setQueryParams()
     renderBooks()
 }
 
@@ -301,7 +314,7 @@ function onCheckAscending(el) {
 
     gQueryOptions.sortBy[elOption.value] = elDescending.checked ? -1 : 1
 
-
+    setQueryParams()
     renderBooks()
 }
 
@@ -312,7 +325,8 @@ function onCheckDescending(el) {
     elAscending.checked = false
 
     gQueryOptions.sortBy[elOption.value] = el.checked ? -1 : 1
-
+    
+    setQueryParams()
     renderBooks()
 }
 
@@ -322,6 +336,7 @@ function onPrevPage() {
     if (gQueryOptions.page.idx > 0) gQueryOptions.page.idx--
     else gQueryOptions.page.idx = Math.floor(booksCount / ((gQueryOptions.page.idx + 1) * gQueryOptions.page.size))
 
+    setQueryParams()
     renderBooks()
 }
 
@@ -331,6 +346,7 @@ function onNextPage() {
     if (booksCount > ((gQueryOptions.page.idx + 1) * gQueryOptions.page.size)) gQueryOptions.page.idx++
     else gQueryOptions.page.idx = 0
 
+    setQueryParams()
     renderBooks()
 }
 
@@ -423,8 +439,93 @@ function onSortHeader(el) {
         gQueryOptions.sortBy[value] = 1
     }
 
-    renderBooks()
     gQueryOptions.page.idx = 0
     el.innerText = value.charAt(0).toUpperCase() + value.slice(1) + currDir
+    
+    setQueryParams()
+    renderBooks()
+    
 }
 
+// Query Params
+
+function readQueryParams() {
+    const queryParams = new URLSearchParams(window.location.search)
+    gQueryOptions.filterBy = {
+        title: queryParams.get('title') || '',
+        rating: +queryParams.get('rating') || 0
+    }
+
+    if(queryParams.get('sortBy')) {
+        const prop = queryParams.get('sortBy')
+        const dir = queryParams.get('sortDir')
+        gQueryOptions.sortBy[prop] = dir
+    }
+
+    if(queryParams.get('pageIdx')) {
+        gQueryOptions.page.idx = +queryParams.get('pageIdx')
+        gQueryOptions.page.size = +queryParams.get('pageSize')
+    }
+
+    if(queryParams.get('read')) {
+        gQueryOptions.read.isRead = true
+        gQueryOptions.read.bookId = queryParams.get('read')
+    }
+
+    renderQueryParams()
+}
+
+function renderQueryParams() {
+    
+    document.querySelector('.search-input').value = gQueryOptions.filterBy.title
+    document.querySelector('.filters input').value = gQueryOptions.filterBy.rating
+    
+    if (gQueryOptions.read.isRead) {
+        onReadBook(gQueryOptions.read.bookId)
+    }
+
+    const sortKeys = Object.keys(gQueryOptions.sortBy)
+    const sortBy = sortKeys[0]
+    const dir = +gQueryOptions.sortBy[sortKeys[0]]
+
+    document.querySelector('.sort-by').value = sortBy || ''
+    document.querySelector('.descending').checked = (dir === -1) ? true : false
+
+}
+
+function setQueryParams() {
+    const queryParams = new URLSearchParams()
+
+    queryParams.set('title', gQueryOptions.filterBy.title)
+    queryParams.set('rating', gQueryOptions.filterBy.rating)
+
+    if (gQueryOptions.read.isRead) {
+        queryParams.set('read', gQueryOptions.read.bookId)
+    }
+
+    const sortKeys = Object.keys(gQueryOptions.sortBy)
+    if(sortKeys.length) {
+        console.log('sortKeys:', sortKeys)
+        queryParams.set('sortBy', sortKeys[0])
+        queryParams.set('sortDir', gQueryOptions.sortBy[sortKeys[0]])
+    }
+
+    if(gQueryOptions.page) {
+        queryParams.set('pageIdx', gQueryOptions.page.idx)
+        queryParams.set('pageSize', gQueryOptions.page.size)
+    }
+
+    const newUrl = 
+        window.location.protocol + "//" + 
+        window.location.host + 
+        window.location.pathname + '?' + queryParams.toString()
+
+    window.history.pushState({ path: newUrl }, '', newUrl)
+    // console.log('queryParams:', queryParams.toString())
+}
+
+function closeDetails() {
+    gQueryOptions.read.isRead = false
+
+    setQueryParams()
+}
