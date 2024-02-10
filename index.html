@@ -67,6 +67,7 @@
             <h3>Author: <span></span></h3>
             <h4>Rating: <span></span></h4>
             <pre></pre>
+            <button onclick="openEditModal(`${gQueryOptions.read.bookId}`)">To Details</button>
             <button onclick="closeDetails()">x</button>
         </form>
     </dialog>
@@ -89,8 +90,10 @@
     </dialog>
 
     <section class="page-btns">
-        <button onclick="onPrevPage()"><<</button>
-                <button onclick="onNextPage()">>></button>
+        <button style="font-size: larger;" onclick="onPrevPage()">⇠</button>
+        <span class="page-nums">
+        </span>
+        <button style="font-size: larger;" onclick="onNextPage()">⇢</button>
     </section>
 
     <footer>

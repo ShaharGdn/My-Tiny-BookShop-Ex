@@ -3,8 +3,8 @@
 const gQueryOptions = {
     filterBy: { title: '', rating: 0 },
     sortBy: {},
-    page: { idx: 0, size: 10 },
-    read: {isRead: false, bookId: null}
+    page: { idx: 0, size: 2 },
+    read: {isRead: false, bookId: null},
 }
 
 var gEditedBook = null
@@ -12,27 +12,23 @@ var gEditedBook = null
 function onInit() {
     //do we have storage or render the demo data?
 
-    getBooks()
-    updateStats()
     readQueryParams()
     renderBooks()
-
-    if(gQueryOptions.bookId) {
-        console.log('read:')
-    }
 }
 
 function renderBooks() {
     const elBooksList = document.querySelector('.book-list')
+    const elPageBtns = document.querySelector('.page-nums')
     const books = getBooks(gQueryOptions)
+    var booksCount = getBooksCount(gQueryOptions)
 
     if (books.length === 0) {
         // If there are no matching books, display an empty message
-        elBooksList.innerHTML = `<tr><td colspan="5">No matching books were found...</td></tr>`;
+        elBooksList.innerHTML = `<tr><td colspan="5">No matching books were found...</td></tr>`
         return;
     }
 
-    // Build the dynamic table rows
+    // Build the table rows
     const rowsHtml = books.map(book => `
         <tr>
             <td>${book.name}</td>
@@ -47,10 +43,19 @@ function renderBooks() {
         </tr>
     `)
 
-    // Join the rows and update the table body content
     elBooksList.innerHTML = rowsHtml.join('')
 
-    // Update any statistics or other UI elements as needed
+    var pageBtnsHtml = `<button onclick="goToPage(this)">${gQueryOptions.page.idx +1}</button>`
+
+    if (booksCount > ((gQueryOptions.page.idx + 2) * gQueryOptions.page.size)) {
+        pageBtnsHtml += `<button onclick="goToPage(this)">${gQueryOptions.page.idx +2}</button>
+                        <button onclick="goToPage(this)">${gQueryOptions.page.idx +3}</button>`
+    } else if (booksCount > ((gQueryOptions.page.idx + 1) * gQueryOptions.page.size)) {
+        pageBtnsHtml += `<button onclick="goToPage(this)">${gQueryOptions.page.idx +2}</button>`
+    } 
+
+    elPageBtns.innerHTML = pageBtnsHtml
+    
     updateStats()
 }
 
@@ -172,7 +177,7 @@ function onUpdateBook(bookId) {
 }
 //event handler for when the details button was clicked 
 function onReadBook(BookId) {
-    console.log('hello:')
+    console.log('hi:')
     const elModal = document.querySelector('.book-details')
     const elTitle = elModal.querySelector('h2 span')
     const elAuthor = elModal.querySelector('h3 span')
@@ -190,7 +195,6 @@ function onReadBook(BookId) {
     gQueryOptions.read.bookId = BookId
 
     setQueryParams()
-
     elModal.showModal()
 }
 //event handler for when an input is typed in the search bar - assign value to gFilterBy - an argument for getBooks() to render the filtered books only
@@ -334,7 +338,8 @@ function onPrevPage() {
     var booksCount = getBooksCount(gQueryOptions)
 
     if (gQueryOptions.page.idx > 0) gQueryOptions.page.idx--
-    else gQueryOptions.page.idx = Math.floor(booksCount / ((gQueryOptions.page.idx + 1) * gQueryOptions.page.size))
+    else gQueryOptions.page.idx = Math.floor(booksCount / gQueryOptions.page.size) -1 
+    // else gQueryOptions.page.idx = Math.floor(booksCount / ((gQueryOptions.page.idx + 1) * gQueryOptions.page.size))
 
     setQueryParams()
     renderBooks()
@@ -446,7 +451,6 @@ function onSortHeader(el) {
     renderBooks()
     
 }
-
 // Query Params
 
 function readQueryParams() {
@@ -528,4 +532,13 @@ function closeDetails() {
     gQueryOptions.read.isRead = false
 
     setQueryParams()
+}
+
+function goToPage(elPageNum) {
+    const pageNum = +elPageNum.innerText
+
+    gQueryOptions.page.idx = pageNum - 1
+
+    setQueryParams()
+    renderBooks()
 }

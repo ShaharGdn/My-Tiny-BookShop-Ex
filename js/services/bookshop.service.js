@@ -51,7 +51,8 @@ function filterBooks(options) {
 }
 
 function addBook(book) {
-    const newBook = _createBook(book.name, book.author, book.rating, book.price, `<img src="https://st4.depositphotos.com/14953852/24787/v/450/depositphotos_247872612-stock-illustration-no-image-available-icon-vector.jpg">`)
+    const imgUrl = `<img src="https://st4.depositphotos.com/14953852/24787/v/450/depositphotos_247872612-stock-illustration-no-image-available-icon-vector.jpg">`
+    const newBook = _createBook(book.name, book.author, book.price, imgUrl, book.rating)
 
     gBooks.unshift(newBook)
 
@@ -114,7 +115,7 @@ function _createBooks() {
 }
 
 //make a single book
-function _createBook(name, author,rating= getRandomRating(5), price, imgURL) {
+function _createBook(name, author,price, imgURL, rating = getRandomRating(5)) {
     return {
         name,
         author,
@@ -140,7 +141,6 @@ function _createBook(name, author,rating= getRandomRating(5), price, imgURL) {
 function _saveBooks() {
     saveToStorage('booksDB', gBooks)
 }
-
 //get stats of existing books
 function getStats() {
     var stats = gBooks.reduce((acc, book) => {
