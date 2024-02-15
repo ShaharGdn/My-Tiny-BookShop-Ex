@@ -11,7 +11,7 @@ var gEditedBook = null
 
 function onInit() {
     //do we have storage or render the demo data?
-
+    
     readQueryParams()
     renderBooks()
 }
@@ -203,6 +203,7 @@ function onLookupTitle(ev, elValue) {
     ev.stopPropagation()
 
     gQueryOptions.filterBy.title = elValue.value
+    gQueryOptions.page.idx = 0
 
     setQueryParams()
     renderBooks()
@@ -222,6 +223,8 @@ function onClearFilters() {
     }
 
     gQueryOptions.sortBy = {}
+
+    gQueryOptions.page.idx = 0
 
     searchInput.value = ''
     elRatingFilter.value = ''
@@ -276,6 +279,8 @@ function onFilterRating(elInput) {
     elInput.title = rating
 
     gQueryOptions.filterBy.rating = rating
+    gQueryOptions.page.idx = 0
+
 
     setQueryParams()
     renderBooks()
@@ -415,24 +420,6 @@ function closeModal() {
     gEditedBook = null
 }
 
-// function onSortHeader(el) {
-//     const value = el.getAttribute('data-value')
-//     const currDir = gQueryOptions.sortBy[value] === -1 ? ' -' : ' +'
-
-//     console.log('currDir:', currDir)
-    
-//     el.innerText = value.charAt(0).toUpperCase() + value.slice(1) + currDir
-
-//     if (gQueryOptions.sortBy[value]) {
-//         gQueryOptions.sortBy[value] *= -1
-//     } else {
-//         gQueryOptions.sortBy = {}
-//         gQueryOptions.sortBy[value] = 1
-//     }
-
-//     renderBooks()
-//     gQueryOptions.page.idx = 0
-// }
 function onSortHeader(el) {
     const value = el.getAttribute('data-value')
     const currDir = gQueryOptions.sortBy[value] === 1 ? ' ↓' : ' ↑' 

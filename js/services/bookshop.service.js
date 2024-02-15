@@ -36,11 +36,13 @@ function getBooksCount(options) {
 }
 
 function filterBooks(options) {
-    const valueLower = options.filterBy.title.toLowerCase()
+    const value = options.filterBy.title
+    const regex = new RegExp(value, 'i')
 
     var books = gBooks.filter(book => {
-        const nameLower = book.name.toLowerCase()
-        return nameLower.startsWith(valueLower) || nameLower.includes(valueLower)
+        // const nameLower = book.name.toLowerCase()
+        const bookName = book.name
+        return regex.test(bookName)
     })
 
     if (options.filterBy.rating) {
@@ -49,6 +51,21 @@ function filterBooks(options) {
 
     return books
 }
+
+// function filterBooks(options) {
+//     const valueLower = options.filterBy.title.toLowerCase()
+
+//     var books = gBooks.filter(book => {
+//         const nameLower = book.name.toLowerCase()
+//         return nameLower.startsWith(valueLower) || nameLower.includes(valueLower)
+//     })
+
+//     if (options.filterBy.rating) {
+//         books = books.filter(book => book.rating >= options.filterBy.rating)
+//     }
+
+//     return books
+// }
 
 function addBook(book) {
     const imgUrl = `<img src="https://st4.depositphotos.com/14953852/24787/v/450/depositphotos_247872612-stock-illustration-no-image-available-icon-vector.jpg">`
